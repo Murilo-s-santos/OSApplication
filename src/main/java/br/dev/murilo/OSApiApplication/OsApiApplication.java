@@ -9,5 +9,6 @@ public class OsApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OsApiApplication.class, args);
 	}
+        
 
 }
