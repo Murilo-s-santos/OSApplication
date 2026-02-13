@@ -1,11 +1,23 @@
 package br.dev.murilo.OSApiApplication.domain.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+
+@Entity
 public class Cliente 
 {
     // Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
     private String email; 
+    
+    @Column(name = "telefone")
     private String fone;
     
     // Construtores
