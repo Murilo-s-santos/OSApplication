@@ -4,8 +4,12 @@ import br.dev.murilo.OSApiApplication.domain.model.OrdemServico;
 import br.dev.murilo.OSApiApplication.domain.model.StatusOrdemServico;
 import br.dev.murilo.OSApiApplication.domain.repository.OrdemServicoRepository;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class OrdemServicoService 
