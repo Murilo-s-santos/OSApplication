@@ -25,4 +25,14 @@ public class OrdemServicoService
         return ordemServicoRepository.save(ordemServico);
     }
     
+    public OrdemServico salvar(OrdemServico os)
+    {
+        return ordemServicoRepository.save(os);
+    }
+    
+    public void apagar(Long id)
+    {
+        ordemServicoRepository.deleteById(id);
+    }
+    
 }
