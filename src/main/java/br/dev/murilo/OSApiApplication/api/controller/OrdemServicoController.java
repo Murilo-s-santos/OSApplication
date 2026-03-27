@@ -1,6 +1,8 @@
 package br.dev.murilo.OSApiApplication.api.controller;
 
+import br.dev.murilo.OSApiApplication.domain.dto.AtualizaStatusDTO;
 import br.dev.murilo.OSApiApplication.domain.model.OrdemServico;
+import br.dev.murilo.OSApiApplication.domain.model.StatusOrdemServico;
 import br.dev.murilo.OSApiApplication.domain.repository.OrdemServicoRepository;
 import br.dev.murilo.OSApiApplication.domain.service.OrdemServicoService;
 import jakarta.validation.Valid;
@@ -53,13 +55,13 @@ public class OrdemServicoController
             return ResponseEntity.ok(ordemServico.get());
         }
         else
-        {
+        { 
             // Retorna status 404 (Not Found) se não existir no banco
             return ResponseEntity.notFound().build();
         }
     }
     
-@PutMapping("/{ordem_servicoID}")
+    @PutMapping("/{ordem_servicoID}")
     public ResponseEntity<OrdemServico> atualizar(@PathVariable Long ordem_servicoID,
                                                   @Valid @RequestBody OrdemServico ordemServico)
     {
@@ -97,6 +99,35 @@ public class OrdemServicoController
         ordemServicoService.apagar(ordem_servicoID);
         
         return ResponseEntity.noContent().build();
+    }
+    
+    @GetMapping("/cliente/{clienteId}")
+    public ResponseEntity<List<OrdemServico>> listarPorCliente(@PathVariable Long clienteId)
+    {
+        // Chama o método mágico que criamos no repositório
+        List<OrdemServico> ordens = ordemServicoRepository.findByClienteId(clienteId);
+        
+        // Retorna a lista com status 200 OK (mesmo se a lista estiver vazia, é o correto!)
+        return ResponseEntity.ok(ordens);
+    }
+    
+    @PutMapping("/atualiza-status/{ordemServicoID}")
+    public ResponseEntity<OrdemServico> atualizaStatus(
+        @PathVariable Long ordemServicoID,
+        @Valid @RequestBody AtualizaStatusDTO statusDTO)
+    {
+        Optional<OrdemServico> optOS = ordemServicoService.atualizaStatus(
+                ordemServicoID,
+                statusDTO.status());
+        
+        if (optOS.isPresent())
+        {
+            return ResponseEntity.ok(optOS.get());
+        }
+        else
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
     
     
