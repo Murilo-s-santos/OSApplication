@@ -1,8 +1,10 @@
 package br.dev.murilo.OSApiApplication.domain.service;
 
 import br.dev.murilo.OSApiApplication.domain.exception.DomainException;
+import br.dev.murilo.OSApiApplication.domain.model.Comentario;
 import br.dev.murilo.OSApiApplication.domain.model.OrdemServico;
 import br.dev.murilo.OSApiApplication.domain.model.StatusOrdemServico;
+import br.dev.murilo.OSApiApplication.domain.repository.ComentarioRepository;
 import br.dev.murilo.OSApiApplication.domain.repository.OrdemServicoRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -17,6 +19,23 @@ public class OrdemServicoService
 {
     @Autowired
     private OrdemServicoRepository ordemServicoRepository;
+    
+    @Autowired
+    private ComentarioRepository comentarioRepository;
+    
+    public Comentario adicionarComentario(Long ordemServicoId, String descricao)
+    {
+        OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoId)
+                .orElseThrow(() -> new DomainException("Ordem de servico nao encontrada"));
+        
+        Comentario comentario = new Comentario();
+        comentario.setDataEnvio(LocalDateTime.now());
+        comentario.setDescricao(descricao);
+        comentario.setOrdemServico(ordemServico);
+        
+        return comentarioRepository.save(comentario);
+    }
+    
     
     public OrdemServico criar(OrdemServico ordemServico)
     {

@@ -1,5 +1,6 @@
 package br.dev.murilo.OSApiApplication.domain.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,21 +17,25 @@ public class Cliente
     // Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(name = "cliente ID", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
     private long id;
     
     @NotBlank
     @Size(max = 60)
+    @Schema(name = "cliente nome", example = "Henderson", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nome;
     
     @NotBlank
     @Email
     @Size(max = 255)
+    @Schema(name = "cliente email", example = "hendersonOguimaraes@gmail.com", requiredMode = Schema.RequiredMode.REQUIRED)
     private String email; 
     
     
     @NotBlank
     @Size(max = 20)
     @Column(name = "telefone")
+    @Schema(name = "cliente telefone", example = "(12)98654-2666", requiredMode = Schema.RequiredMode.REQUIRED)
     private String fone;
     
     // Construtores
